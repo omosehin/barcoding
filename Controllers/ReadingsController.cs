@@ -89,7 +89,6 @@ namespace Manual_Validation.Controllers
         public async Task<HttpResponseMessage> AddReadings()
         {
             
-            var res = HttpContext.Current;
             var httpContext = HttpContext.Current.Request;
             var OCREngine = httpContext.Params["OCREngine"];
             var ImageBase64 = httpContext.Params["ImageBase64"];
@@ -99,8 +98,6 @@ namespace Manual_Validation.Controllers
             if (meterNumber == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Barcode is not well captured");
 
-
-            
             MultipartFormDataContent multipartForm = new MultipartFormDataContent();
 
             multipartForm.Add(new StringContent(ImageBase64), "Base64Image");
