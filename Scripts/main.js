@@ -43,7 +43,7 @@ $("#save").click(function () {
    // formData.append("MeterNumber", getMeterNumber.split(':')[1])
    // formData.append("OCREngine", "2")
 
-    fetch('https://localhost:44311/api/Homes/GetDetails', {
+    fetch('https://localhost:44311/api/Readings/AddReadings', {
         method: 'POST',
         body: formData
     })
