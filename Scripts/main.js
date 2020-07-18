@@ -2,7 +2,6 @@
 
 /*For capturing meter Consumption */
 let showCamera = false;
-
 function displayCameraForEnergyConsuptionCapture() {
     showCamera = true;
     showCameraNow()
@@ -32,20 +31,19 @@ function take_snapshot() {
             document.getElementById('results').src = data_uri
         });
         Webcam.reset();
-    if (getMeterNumber != null) {
-        $("#save").removeClass('hidden')
-    }       
+           
 }
 
 
 
 $("#save").click(function () {
     let formData = new FormData();
-    formData.append("ImageBase64", getBase64)
+   // formData.append("ImageBase64", getBase64)
+    formData.append("Barcode", getBase64)
    // formData.append("MeterNumber", getMeterNumber.split(':')[1])
-    formData.append("OCREngine", "2")
+   // formData.append("OCREngine", "2")
 
-    fetch('https://localhost:44311/api/Readings', {
+    fetch('https://localhost:44311/api/Homes/GetDetails', {
         method: 'POST',
         body: formData
     })
