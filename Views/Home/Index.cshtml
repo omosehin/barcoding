@@ -1,0 +1,68 @@
+﻿
+    <div class="container">
+        <div class="row panel panel-info">
+            <div class="panel-heading">
+                <h3 class="pl-4">
+                    Scan Meter Consumption
+                </h3>
+            </div>
+            <div class="panel-body text-center">
+                <div class="col-lg-6">
+                    <div class="well" style="position: relative;display: inline-block;">
+
+                        <div id="my_camera"> </div>
+                       @* <button class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsuptionCapture1(this)">Start</button>*@
+                        <button type=button value="Take Snapshot" id="barcode" onClick="take_snapshot1(this)" style="margin-top:1rem" class="btn btn-primary">
+                            Capture Meter Consumption
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="well" style="overflow: hidden;">
+                        <img width="320" height="240" id="results1" src="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+@* 2nd *@
+<div class="container">
+    <div class="row panel panel-info">
+        <div class="panel-heading">
+            <h3 class="pl-4">
+                Scan Meter Consumption
+            </h3>
+        </div>
+        <div class="panel-body text-center">
+            <div class="col-lg-6">
+                <div class="well" style="position: relative;display: inline-block;">
+
+                    <div id="my_camera"> </div>
+                       @* <button  class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsuptionCapture(this)">Start</button>*@
+                        <button type=button value="Take Meter Number"  id="meterNumber" onClick="take_snapshot(this)" style="margin-top:1rem" class="btn btn-primary">
+                            Capture Meter Consumption
+                        </button>
+                 </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="well" style="overflow: hidden;">
+                        <img width="320" height="240" id="results1" src="" >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  </div>
+<div class="container">
+    <div class="row ">
+        
+        <div class="col-lg-12 text-center ">
+            <button id="save" class="btn btn-primary btn-lg btn-block">Send</button>
+            <p class=" text-danger errMsg"></p>
+            <p class="succMsg text-success"></p>
+        </div>
+
+    </div>
+</div>
+
