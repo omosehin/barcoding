@@ -2,33 +2,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    /*.cropper-crop {
-        display: none;
-    }
-   .cropper-bg{
-       display:none;
-   } */
+     /*.cropper-crop {
+         display: none;
+     }
+    .cropper-bg{
+        display:none;
+    } */
 </style>
-<div class="container">
-    <div class="button-group">
-        <button id="btn-start" type="button" class="button">Start Streaming</button>
-        <button id="btn-stop" type="button" class="button">Stop Streaming</button>
-        <button id="btn-capture" type="button" class="button">Capture Image</button>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-6">
-            <h3>Barcode Capture</h3>
-            <video id="stream" width="320" height="240"></video>
-        </div>
-        <div class="col-lg-6">
-            <h3>Barcode</h3>
-            <canvas id="capture" width="320" height="240" ></canvas>
-            <div id="snapshot" hidden></div>
-            <span><button class="btn btn btn-primary" style="margin:5px 0px" id="getCropped"> Crop Image</button></span>
-        </div>
-    </div>
-</div>
 
 <div class="container">
     <div class="row panel panel-info">
@@ -52,11 +32,50 @@
                 <div class="well" style="overflow: hidden;">
                     <img width="320" height="240" id="results" src="">
                 </div>
+                <div>
+                    <button class="btn btn btn-primary text-center" style="margin:5px 0px" id="getCroppedOCR"> Crop Consumption</button>
+                </div>
+
             </div>
         </div>
     </div>
-
 </div>
+
+<div class="container">
+    <div class="row panel panel-info">
+        <div class="panel-heading">
+            <h3 class="pl-4">
+                Scan Barcode
+            </h3>
+        </div>
+        <div class="panel-body text-center">
+            <div class="col-lg-6">
+                <div class="well" style="position: relative;display: inline-block;">
+
+                    @*  <div id="my_camera"> </div>*@
+                    <video id="stream" width="320" height="240"></video>
+                    <div class="button-group">
+                        <button id="btn-start" type="button" class="btn btn-primary">Start Streaming</button>
+                        <button id="btn-capture" type="button" class="btn btn-primary">Capture Image</button>
+                        <button id="btn-stop" type="button" class="btn btn-danger">Stop Streaming</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="well" style="overflow: hidden;">
+                    <canvas id="capture" width="320" height="240">
+                    </canvas>
+                    <div id="snapshot" hidden></div>
+                    <div>
+                        <button class="btn btn btn-primary" style="margin:5px 0px" id="getCropped"> Crop Barcode Meter</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row ">
 
