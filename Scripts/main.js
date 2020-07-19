@@ -91,7 +91,6 @@ function getSnapshotImg() {
             barcodeBase64string = reader.result; 
             barcodeBase64string.substr(barcodeBase64string.indexOf(', ') + 1);
         }
-
     })
 }
 
@@ -125,19 +124,17 @@ function take_snapshot() {
             meterConsumption = data_uri
             document.getElementById('results').src = data_uri
         });
-        Webcam.reset();
+    Webcam.reset();
+    $("#results").cropper();
+
 }
 
 $("#save").click(function () {
-   // var dataURI = snapshot.firstChild.getAttribute("src");
-   // var imageData = dataURItoBlob(dataURI);
-   console.log("tail", barcodeBase64string)
     let formData = new FormData();
-    formData.append("ImageBase64", meterConsumption)
-    formData.append("Barcode", barcodeBase64string)
-   // console.log(formData.get("ImageBase64"));
-   // formData.append("MeterNumber", getMeterNumber.split(':')[1])
-   // formData.append("OCREngine", "2")
+    formData.append("EnergyConsumptionOcrBase64", meterConsumption)
+    formData.append("MeterNumberBarcodeBase64", barcodeBase64string)
+    formData.append("OCREngine", "2")
+ 
 
     fetch('https://localhost:44311/api/Readings/AddReadings', {
         method: 'POST',

@@ -91,10 +91,11 @@ namespace Manual_Validation.Controllers
             
             var httpContext = HttpContext.Current.Request;
             var OCREngine = httpContext.Params["OCREngine"];
-            var ImageBase64 = httpContext.Params["ImageBase64"];
-            string MeterNumber = httpContext.Params["Barcode"];
+            var ImageBase64 = httpContext.Params["EnergyConsumptionOcrBase64"];
+            string MeterNumber = httpContext.Params["MeterNumberBarcodeBase64"];
 
-            string meterNumber = ReadBarcode(MeterNumber);
+            string meterNumber = ReadBarcode(MeterNumber) ?? "null";
+
        //     if (meterNumber == null)
      //           return Request.CreateResponse(HttpStatusCode.BadRequest, "Barcode is not well captured");
 
