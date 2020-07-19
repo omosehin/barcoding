@@ -7,7 +7,7 @@ var btnCapture = document.getElementById("btn-capture");
 var stream = document.getElementById("stream");
 var capture = document.getElementById("capture");
 var snapshot = document.getElementById("snapshot");
-var getCroppedImage = document.getElementById("getCropped");
+var getCroppedBarcodeImage = document.getElementById("getCroppedBarcode");
 var getCroppedOCRImage = document.getElementById("getCroppedOCR");
 
 // The video stream
@@ -80,7 +80,7 @@ function captureSnapshot() {
     }
 }
 
-getCroppedImage.addEventListener("click", getSnapshotImg);
+getCroppedBarcodeImage.addEventListener("click", getSnapshotImg);
 getCroppedOCRImage.addEventListener("click", getConsumption);
 
 let barcodeBase64string;
@@ -119,12 +119,12 @@ function showCameraNow() {
     }
 }
 
-let meterConsumption;
+//let meterConsumption;
 
 function take_snapshot() {
   
         Webcam.snap(function (data_uri) {
-            meterConsumption = data_uri
+           // meterConsumption = data_uri
             document.getElementById('results').src = data_uri
         });
     Webcam.reset();
@@ -149,8 +149,8 @@ $("#save").click(function () {
     $(".succMsg").empty();
     let formData = new FormData();
   //  formData.append("EnergyConsumptionOcrBase64", meterConsumption)
-    formData.append("EnergyConsumptionOcrBase64", barcodeBase64string)
-    formData.append("MeterNumberBarcodeBase64", oCRbase64string)
+    formData.append("EnergyConsumptionOcrBase64", oCRbase64string )
+    formData.append("MeterNumberBarcodeBase64", barcodeBase64string)
     formData.append("OCREngine", "2")
  
 

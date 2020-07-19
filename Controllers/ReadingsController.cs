@@ -91,7 +91,7 @@ namespace Manual_Validation.Controllers
             
             var httpContext = HttpContext.Current.Request;
             var OCREngine = httpContext.Params["OCREngine"];
-            var ImageBase64 = httpContext.Params["EnergyConsumptionOcrBase64"];
+            string consumption = httpContext.Params["EnergyConsumptionOcrBase64"];
             string MeterNumber = httpContext.Params["MeterNumberBarcodeBase64"];
 
             string meterNumber = ReadBarcode(MeterNumber) ?? "null";
@@ -101,7 +101,7 @@ namespace Manual_Validation.Controllers
 
             MultipartFormDataContent multipartForm = new MultipartFormDataContent();
 
-            multipartForm.Add(new StringContent(ImageBase64), "Base64Image");
+            multipartForm.Add(new StringContent(consumption), "Base64Image");
             multipartForm.Add(new StringContent(OCREngine), "OcrEngine");
             
             _client.DefaultRequestHeaders.Add("apikey", _oCRSpaceApiKey);
