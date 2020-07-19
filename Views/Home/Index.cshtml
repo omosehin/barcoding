@@ -1,23 +1,34 @@
-﻿
-    <div class="container">
-        <div class="button-group">
-            <button id="btn-start" type="button" class="button">Start Streaming</button>
-            <button id="btn-stop" type="button" class="button">Stop Streaming</button>
-            <button id="btn-capture" type="button" class="button">Capture Image</button>
-        </div>
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /*.cropper-crop {
+        display: none;
+    }
+   .cropper-bg{
+       display:none;
+   } */
+</style>
+<div class="container">
+    <div class="button-group">
+        <button id="btn-start" type="button" class="button">Start Streaming</button>
+        <button id="btn-stop" type="button" class="button">Stop Streaming</button>
+        <button id="btn-capture" type="button" class="button">Capture Image</button>
+    </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <h3>Barcode Capture</h3>
-                <video id="stream" width="320" height="240"></video>
-            </div>
-            <div class="col-lg-6">
-                <h3>Barcode</h3>
-                <canvas id="capture" width="320" height="240" hidden></canvas>
-                <div id="snapshot"></div>
-            </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Barcode Capture</h3>
+            <video id="stream" width="320" height="240"></video>
+        </div>
+        <div class="col-lg-6">
+            <h3>Barcode</h3>
+            <canvas id="capture" width="320" height="240" ></canvas>
+            <div id="snapshot" hidden></div>
+            <span><button class="btn btn btn-primary" style="margin:5px 0px" id="getCropped"> Crop Image</button></span>
         </div>
     </div>
+</div>
 
 <div class="container">
     <div class="row panel panel-info">
@@ -31,24 +42,24 @@
                 <div class="well" style="position: relative;display: inline-block;">
 
                     <div id="my_camera"> </div>
-                        <button  class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsuptionCapture()">Start</button>
-                        <button type=button value="Take Snapshot" onClick="take_snapshot()" style="margin-top:1rem" class="btn btn-primary">
-                            Capture Meter Consumption
-                        </button>
-                 </div>
+                    <button class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsuptionCapture()">Start</button>
+                    <button type=button value="Take Snapshot" onClick="take_snapshot()" style="margin-top:1rem" class="btn btn-primary">
+                        Capture Meter Consumption
+                    </button>
                 </div>
-                <div class="col-lg-6">
-                    <div class="well" style="overflow: hidden;">
-                        <img width="320" height="240" id="results" src="" >
-                    </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="well" style="overflow: hidden;">
+                    <img width="320" height="240" id="results" src="">
                 </div>
             </div>
         </div>
+    </div>
 
-  </div>
+</div>
 <div class="container">
     <div class="row ">
-        
+
         <div class="col-lg-12 text-center ">
             <button id="save" class="btn btn-primary btn-lg btn-block">Send</button>
             <p class=" text-danger errMsg"></p>
@@ -58,3 +69,5 @@
     </div>
 </div>
 
+<script>
+</script>

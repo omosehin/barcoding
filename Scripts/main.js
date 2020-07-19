@@ -7,6 +7,7 @@ var btnCapture = document.getElementById("btn-capture");
 var stream = document.getElementById("stream");
 var capture = document.getElementById("capture");
 var snapshot = document.getElementById("snapshot");
+var getCroppedImage = document.getElementById("getCropped");
 
 // The video stream
 var cameraStream = null;
@@ -73,24 +74,25 @@ function captureSnapshot() {
         snapshot.innerHTML = '';
 
         snapshot.appendChild(img);
+        $("#capture").cropper();
+
     }
 }
-let barcode;
-function dataURItoBlob(dataURI) {
-    //console.log("top",dataURI);
-    barcode = dataURI;
-    var byteString = atob(dataURI.split(',')[1]);
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
-    var buffer = new ArrayBuffer(byteString.length);
-    var data = new DataView(buffer);
+getCroppedImage.addEventListener("click", getSnapshotImg);
 
-    for (var i = 0; i < byteString.length; i++) {
+let barcodeBase64string;
+function getSnapshotImg() {
+    $("#capture").cropper('getCroppedCanvas').toBlob(function (blob) {
 
-        data.setUint8(i, byteString.charCodeAt(i));
-    }
+        var reader = new FileReader();
+        reader.readAsDataURL(blob)
+        reader.onload = function () {
+            barcodeBase64string = reader.result; 
+            barcodeBase64string.substr(barcodeBase64string.indexOf(', ') + 1);
+        }
 
-    return new Blob([buffer], { type: mimeString });
+    })
 }
 
 
@@ -117,7 +119,6 @@ function showCameraNow() {
 
 let meterConsumption;
 
-//< !--Code to handle taking the snapshot and displaying it locally-- >
 function take_snapshot() {
   
         Webcam.snap(function (data_uri) {
@@ -125,19 +126,15 @@ function take_snapshot() {
             document.getElementById('results').src = data_uri
         });
         Webcam.reset();
-           
 }
 
-
-
-
 $("#save").click(function () {
-    var dataURI = snapshot.firstChild.getAttribute("src");
-    var imageData = dataURItoBlob(dataURI);
-   //console.log("tail", barcode)
+   // var dataURI = snapshot.firstChild.getAttribute("src");
+   // var imageData = dataURItoBlob(dataURI);
+   console.log("tail", barcodeBase64string)
     let formData = new FormData();
     formData.append("ImageBase64", meterConsumption)
-    formData.append("Barcode", barcode)
+    formData.append("Barcode", barcodeBase64string)
    // console.log(formData.get("ImageBase64"));
    // formData.append("MeterNumber", getMeterNumber.split(':')[1])
    // formData.append("OCREngine", "2")
