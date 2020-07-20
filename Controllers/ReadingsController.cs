@@ -51,7 +51,7 @@ namespace Manual_Validation.Controllers
             HttpResponseMessage myresponse2 = Request.CreateResponse(HttpStatusCode.OK, barcode);
 
             return myresponse2;
-        }
+        } 
         [Route("api/Homes/GetDetails")]
 
         [HttpPost]
@@ -98,8 +98,8 @@ namespace Manual_Validation.Controllers
 
             string meterNumber = ReadBarcode(MeterNumber) ?? "null";
 
-       //     if (meterNumber == null)
-     //           return Request.CreateResponse(HttpStatusCode.BadRequest, "Barcode is not well captured");
+            if (meterNumber == null)
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Barcode is not well captured");
 
             MultipartFormDataContent multipartForm = new MultipartFormDataContent();
 
