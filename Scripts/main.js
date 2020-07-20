@@ -9,6 +9,19 @@ var capture = document.getElementById("capture");
 var snapshot = document.getElementById("snapshot");
 var getCroppedBarcodeImage = document.getElementById("getCroppedBarcode");
 var getCroppedOCRImage = document.getElementById("getCroppedOCR");
+getLocation();
+
+$("#save").prop("disabled", "disabled");
+$("#btn-capture").prop("disabled", "disabled");
+$("#OCR-capture").prop("disabled", "disabled");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+};
 
 // The video stream
 var cameraStream = null;
@@ -16,6 +29,8 @@ var cameraStream = null;
 // Attach listeners
 btnStart.addEventListener("click", // Start Streaming
     function startStreaming() {
+        $("#btn-capture").removeAttr('disabled');
+
 
         var mediaSupport = 'mediaDevices' in navigator;
 
@@ -87,6 +102,7 @@ let barcodeBase64string;
 let oCRbase64string;
 function getSnapshotImg() {
     $("#capture").cropper('getCroppedCanvas').toBlob(function (blob) {
+        $("#save").removeAttr('disabled');
 
         var reader = new FileReader();
         reader.readAsDataURL(blob)
@@ -95,12 +111,17 @@ function getSnapshotImg() {
             barcodeBase64string.substr(barcodeBase64string.indexOf(', ') + 1);
         }
     })
+    $.ambiance({
+        message: "Image Cropped,Close", title: "Success!",
+        type: "success"
+    });
 }
 
 
 /*For capturing meter Consumption */
 let showCamera = false;
-function displayCameraForEnergyConsuptionCapture() {
+function displayCameraForEnergyConsumptionCapture() {
+   // document.getElementById('results').val("");
     showCamera = true;
     showCameraNow()
 }
@@ -108,6 +129,7 @@ function displayCameraForEnergyConsuptionCapture() {
 var my_camera = document.getElementById('my_camera')
 
 function showCameraNow() {
+    $("#OCR-capture").removeAttr('disabled');
     if (showCamera === true) {
         Webcam.set({
             width: 320,
@@ -142,30 +164,77 @@ function getConsumption() {
             oCRbase64string.substr(oCRbase64string.indexOf(', ') + 1);
         }
     })
+
+    $.ambiance({
+        message: "Image Cropped,close and snap barcode", timeout: 5, title: "Success!",
+        type: "success"
+    });
+}
+let lat;
+let long;
+function showPosition(position) {
+    lat = position.coords.latitude;
+    long = position.coords.longitude;
 }
 
-$("#save").click(function () {
+
+    
+
+function getData() {
     $(".errMsg").empty();
     $(".succMsg").empty();
     let formData = new FormData();
-  //  formData.append("EnergyConsumptionOcrBase64", meterConsumption)
-    formData.append("EnergyConsumptionOcrBase64", oCRbase64string )
-    formData.append("MeterNumberBarcodeBase64", barcodeBase64string)
-    formData.append("OCREngine", "2")
- 
+    //  formData.append("EnergyConsumptionOcrBase64", meterConsumption)
+    if (typeof oCRbase64string == "undefined") {
+        $.ambiance({ message: "Meter Consumption was not well captured", type: "error", });
+        $("#save").prop("disabled", "disabled");
+        throw new Error("Image not well captured !");
+    }
+    else if (typeof barcodeBase64string == "undefined") {
+        $.ambiance({ message: "Barcode was not well captured", type: "error", });
+        $("#save").prop("disabled", "disabled");
+        throw new Error("Image not well captured !");
+    }
+    else {
+        formData.append("EnergyConsumptionOcrBase64", oCRbase64string)
+        formData.append("MeterNumberBarcodeBase64", barcodeBase64string)
+        formData.append("Latitude", lat)
+        formData.append("Longitude", long)
+        formData.append("OCREngine", "2")
+        return formData
+    }
+}
 
+$("#save").click(function () {
+    var formdatum = getData();
     fetch('https://localhost:44311/api/Readings/AddReadings', {
         method: 'POST',
-        body: formData
+        body: formdatum
     })
         .then(response => response.json())
         .then(response => {
-            $(".succMsg").append(response);
+          //  $(".succMsg").append(response);
+            $.ambiance({
+                message: response, title: "Success!",
+                type: "success" });
+
+            $("#save").prop("disabled", "disabled");
+            $("#btn-capture").prop("disabled", "disabled");
+            $("#OCR-capture").prop("disabled", "disabled");
         })
         .catch(error => {
-            console.log(error)
-            $(".errMsg").append(error)
+          //  console.log(error)
+          //  $(".errMsg").append(error)
+            $.ambiance({
+                message: error,
+                type: "error"
+            });
             getMeterNumber = null
+            $("#save").prop("disabled", "disabled");
+            $("#btn-capture").prop("disabled", "disabled");
+            $("#OCR-capture").prop("disabled", "disabled");
             // console.log(error)
         });
+    $("#btn-capture").prop("disabled", "disabled");
+    $("#OCR-capture").prop("disabled", "disabled");
 })

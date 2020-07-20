@@ -93,6 +93,8 @@ namespace Manual_Validation.Controllers
             var OCREngine = httpContext.Params["OCREngine"];
             string consumption = httpContext.Params["EnergyConsumptionOcrBase64"];
             string MeterNumber = httpContext.Params["MeterNumberBarcodeBase64"];
+            var latitude = httpContext.Params["Latitude"];
+            var longitude = httpContext.Params["Longitude"];
 
             string meterNumber = ReadBarcode(MeterNumber) ?? "null";
 
