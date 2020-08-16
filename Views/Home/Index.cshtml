@@ -1,32 +1,15 @@
-﻿
-    <div class="container">
-        <div class="row panel panel-info">
-            <div class="panel-heading">
-                <h3 class="pl-4">
-                    Scan Meter Consumption
-                </h3>
-            </div>
-            <div class="panel-body text-center">
-                <div class="col-lg-6">
-                    <div class="well" style="position: relative;display: inline-block;">
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+     /*.cropper-crop {
+         display: none;
+     }
+    .cropper-bg{
+        display:none;
+    } */
+</style>
 
-                        <div id="my_camera"> </div>
-                       @* <button class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsuptionCapture1(this)">Start</button>*@
-                        <button type=button value="Take Snapshot" id="barcode" onClick="take_snapshot1(this)" style="margin-top:1rem" class="btn btn-primary">
-                            Capture Meter Consumption
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="well" style="overflow: hidden;">
-                        <img width="320" height="240" id="results1" src="">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-@* 2nd *@
 <div class="container">
     <div class="row panel panel-info">
         <div class="panel-heading">
@@ -34,29 +17,86 @@
                 Scan Meter Consumption
             </h3>
         </div>
-        <div class="panel-body text-center">
-            <div class="col-lg-6">
+        <div class="panel-body text-center center">
+            <div class="col-lg-12  text-center">
                 <div class="well" style="position: relative;display: inline-block;">
 
                     <div id="my_camera"> </div>
-                       @* <button  class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsuptionCapture(this)">Start</button>*@
-                        <button type=button value="Take Meter Number"  id="meterNumber" onClick="take_snapshot(this)" style="margin-top:1rem" class="btn btn-primary">
-                            Capture Meter Consumption
-                        </button>
-                 </div>
+                    <button class="btn btn-primary" style="margin-top:1rem" onclick="displayCameraForEnergyConsumptionCapture()">Start Streaming</button>
+                    <button type=button value="Take Snapshot" id="OCR-capture" onClick="take_snapshot()" style="margin-top:1rem" class="btn btn-primary" data-toggle="modal" data-target="#OCRModal">
+                        Capture Consumption
+                    </button>
                 </div>
-                <div class="col-lg-6">
-                    <div class="well" style="overflow: hidden;">
-                        <img width="320" height="240" id="results1" src="" >
+                    <p class="OcrError text-danger"></p>
+            </div>
+            <div class="modal fade" id="OCRModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="well" style="overflow: hidden;">
+                                <img width="320" height="240" id="results" src="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn btn-primary text-center" style="margin:5px 0px" id="getCroppedOCR"> Crop Consumption</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row panel panel-info">
+        <div class="panel-heading">
+            <h3 class="pl-4">
+                Scan Barcode
+            </h3>
+        </div>
+        <div class="panel-body text-center">
+            <div class="col-lg-12">
+                <div class="well" style="position: relative;display: inline-block;">
+
+                    @*  <div id="my_camera"> </div>*@
+                    <video id="stream" width="320" height="240"></video>
+                    <div class="button-group">
+                        <button id="btn-start" type="button" class="btn btn-primary">Start Streaming</button>
+                        <button id="btn-capture" type="button" class="btn btn-primary" data-toggle="modal" data-target="#BarcodeModal">Capture Barcode</button>
+                        <button id="btn-stop" type="button" class="btn btn-danger">Stop Streaming</button>
+                    </div>
+                </div>
+                <p class="BarcodeError text-danger"></p>
+
+            </div>
+            <div class="modal fade" id="BarcodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="well" style="overflow: hidden;">
+                                <canvas id="capture" width="320" height="240">
+                                </canvas>
+                                <div id="snapshot" hidden></div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button class="btn btn btn-primary" id="getCroppedBarcode"> Crop Barcode </button>
+                                </div>
+                            </div>
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
 
-  </div>
 <div class="container">
     <div class="row ">
-        
+
         <div class="col-lg-12 text-center ">
             <button id="save" class="btn btn-primary btn-lg btn-block">Send</button>
             <p class=" text-danger errMsg"></p>
@@ -66,3 +106,5 @@
     </div>
 </div>
 
+<script>
+</script>

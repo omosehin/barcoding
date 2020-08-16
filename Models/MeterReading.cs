@@ -13,7 +13,8 @@ namespace Manual_Validation.Models
       //  public string  WebId  { get; set; }
         public string MeterNumber { get; set; }
         public string EnergyConsumption { get; set; }
-       
+        public string Text { get; set; }
+
 
     }
 }
